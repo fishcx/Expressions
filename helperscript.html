@@ -1,0 +1,166 @@
+<script>
+    // removes all double signs
+    function doublesigns(string){
+       return string.replaceAll("-+", "-").replaceAll("- +", "-").replaceAll("+ -", "-").replaceAll("- -", "+").replaceAll("+-", "-").replaceAll("-- ", "+");
+    }
+    
+    // simplifies expressions by removing 0x and +0
+    function simplifyExpression(string){
+         var str = string.toString();
+         var latex = false;
+         
+         
+         // if it is encased in latex code, remove that first and add it back in at the end
+         if(str.substring(0,2) == "\\("){
+            
+            latex = true;
+            str = str.substring(2,str.length-2);  //these locations were found by trial and error. The double \\ becomes \ at some point which is strange...
+         
+         }
+         
+         // first remove leading 0 terms
+         if(str.charAt(0) == "0"){
+            
+            var loc = str.search(/(\+|\-)/);
+            // if there is another part to the expressions separated by + or -
+            if(loc > 0){
+             str = str.substring(loc,str.length);
+            }
+            //otherwise return 0
+            else{
+            
+              str = "0";
+            
+            }
+         }
+         
+         // then remove 0 variable terms
+         str = str.replace(/(\+|\-)*(\D|^)0([a-z]|[A-Z])(\^\{\d+\}|\^\d|\^\{\-\d+\})?/g,"");
+         
+         // remove any +0 or -0 constants
+         str = str.replace(/(\+|\-)*(\D|^)0([a-z]|[A-Z])?/g,"");
+         
+         // remove leading + sign if there is one
+         if(str.charAt(0) == "+"){ 
+
+             str = str.substring(1,str.length);
+            
+         }
+         
+         // if everything has been removed, make it 0
+         if(str.trim() == ""){
+         
+           str = "0";
+         
+         }
+
+         // add back in the latex brackets if they were there to begin with
+         if(latex){
+         
+           str = "\\("+str+"\\)";
+         
+         }
+         
+         return str;
+    }
+    
+    // function to replace all occurences of a string
+    String.prototype.replaceAll = function(searchStr, replaceStr) {
+	   var str = this;
+       // no match exists in string?
+       if(str.indexOf(searchStr) === -1) {
+          // return string
+          return str;
+       }
+      // replace and remove first match, and do another recursirve search/replace
+       return (str.replace(searchStr, replaceStr)).replaceAll(searchStr, replaceStr);
+    }
+    
+    // random integer between and including min and max
+	function random(min, max) {
+         return Math.floor(Math.random() * (max - min + 1) ) + min;
+    } 
+    
+    // random non-zero integer bewteen min and max
+    function non_zero_random(min, max) {
+         var output;
+         do{output = Math.floor(Math.random() * (max - min + 1) ) + min;} while (output === 0);  
+         return output;
+    } 
+    
+    function randomDec(min, max, decimalPlaces) {  
+        var rand = Math.random()*(max-min) + min;
+        var power = Math.pow(10, decimalPlaces);
+        return Math.floor(rand*power) / power;
+    }
+    
+    // GCD of two values
+    function gcd(x, y) {
+      if ((typeof x !== 'number') || (typeof y !== 'number')) 
+        return false;
+        
+        x = Math.abs(x);
+        y = Math.abs(y);
+       while(y) {
+          var t = y;
+          y = x % y;
+          x = t;
+        }
+       return x;
+  } 
+
+   // use this for compplicated calculations to format the decimal correctly for floating point errors
+   function formatDec(a){
+   
+     return Math.round(a*10000)/10000;
+   
+   }
+
+// simplify fraction
+    function simplifyFrac(num, denom){
+     
+     // format the negative better so that it isn't in a fraction
+     var neg = "";
+     if((num/denom) < 0){
+        
+        num = Math.abs(num);
+        denom = Math.abs(denom);
+        neg = "-";
+        
+     }
+       // if integer, return integer
+       if((num % denom) === 0){
+       
+         return neg+num/denom;
+         
+       }
+       // otherwise, return fraction in simplest form
+       else{
+            var g = gcd(num,denom);
+            return neg+"\\frac{"+(num/g)+"}{"+(denom/g)+"}";
+        }
+      
+    }
+    
+    // generates random bases for exponential forms. Can be used to mix between numbers and variables
+    function generateBase(negative){
+       var output = "";
+       
+       switch (random(0,4)){
+           
+            case 0: case 1: case 2: case 4: output = produceVars(1)[0]; break; 
+            case 3: 
+            if(negative){
+               output = "("+random(-10,-2)+")"; 
+            } else{
+               output = random(2,10); 
+            }
+            break;
+           
+       }
+       
+       return output;
+    
+    }
+
+</script>

@@ -1,0 +1,567 @@
+<script>
+	$(document).ready(function() {
+    
+    $('.changeItem').change(function(){
+        $('#generate').click();
+    });
+
+    $(document).keypress(function (e) {
+        var key = e.which;
+         if(key == 13)  // the enter key code
+         {
+            $('#generate').click();
+             return false;  
+          }
+    });
+    
+    $('#video-button').hide();
+    
+    var testing = false;
+    $('#generate').click(function(){
+        var type;
+        // handles the formatting for selecting any type
+        if($("#type").val()=="any"){type = random(1,6);}
+        else{type = parseInt($("#type").val())}
+
+        if(!testing){$("#answer").hide(); $("#show-answer").val("Show Answer");}
+        generate(type);       
+     });
+
+
+    $("#show-answer").click(function(){
+       if($("#answer").is(":hidden") ){
+          $("#answer").show();
+          $("#show-answer").val("Hide Answer");
+       } else{
+         $("#answer").hide();
+         $("#show-answer").val("Show Answer");
+        }
+    });
+    
+    if(testing){ $("#answer").show();}
+    
+	});
+	function generate(type){
+       
+       var videoLinks = ["https://www.youtube.com/watch?v=ZwIu1iigKBM&t",
+                         "https://www.youtube.com/watch?v=aAN8U9Ew-2k",
+                         "https://www.youtube.com/watch?v=LT30L4PoO9I",
+                         "https://www.youtube.com/watch?v=swBAPhmXKBI",
+                         "https://www.youtube.com/watch?v=8Uvg-7837xY",
+                         "https://www.youtube.com/watch?v=EY9Ntye0K6U"];
+       
+       if(typeof videoLinks[type-1] !== "undefined"){ 
+         $("#videoLink"). attr("href", videoLinks[type-1]);
+         $('#video-button').show();
+       }
+       else{
+         $('#video-button').hide();
+       }
+       
+       var problem = "";
+       var answer = "";
+       var a,b,c,d,e,f,g,h,i,j,k,l;
+       $("#generated").html("");
+       $("#answer").html("");
+ 
+       switch(type) {
+           // Writing Expressions
+           case 1: 
+           a = generateBase(false);
+           do{b = generateBase(false);} while(b==a);
+           do{c = generateBase(false);} while(c==b || c==a);
+           problem = "Write an expression for ";
+           switch(random(0,19)){
+                 
+               // sum 1
+               case 0: 
+               problem += "the sum of \\("+a+"\\) and \\("+b+"\\)";
+               answer = "\\("+a+" + "+b+"\\)";
+               break;
+               
+               // sum 2
+               case 1: 
+               problem += "\\("+a+"\\) plus \\("+b+"\\)";
+               answer = "\\("+a+" + "+b+"\\)";
+               break;
+               
+               // sum 3
+               case 2: 
+               problem += "\\("+a+"\\) more than \\("+b+"\\)";
+               answer = "\\("+a+" + "+b+"\\)";
+               break;
+               
+               // sum 4
+               case 3: 
+               problem += "\\("+a+"\\) increased by \\("+b+"\\)";
+               answer = "\\("+a+" + "+b+"\\)";
+               break;
+               
+               // difference 1
+               case 4: 
+               problem += "\\("+a+"\\) decreased by \\("+b+"\\)";
+               answer = "\\("+a+" - "+b+"\\)";
+               break;
+               
+               // difference 2
+               case 5: 
+               problem += "\\("+a+"\\) less than \\("+b+"\\)";
+               answer = "\\("+b+" - "+a+"\\)";
+               break;
+               
+               // difference 3
+               case 6: 
+               problem += "\\("+a+"\\) subtracted from \\("+b+"\\)";
+               answer = "\\("+b+" - "+a+"\\)";
+               break;
+               
+               // product 1
+               case 7: 
+               problem += "the product of \\("+a+"\\) and \\("+b+"\\)";
+               answer = "\\("+a+" \\cdot "+b+"\\)";
+               break;
+               
+               // product 2
+               case 8: 
+               problem += "\\("+a+"\\) times \\("+b+"\\)";
+               answer = "\\("+a+" \\cdot "+b+"\\)";
+               break;
+               
+               // product 3
+               case 9: 
+               problem += "double \\("+a+"\\)";
+               answer = "\\(2 \\cdot "+a+"\\)";
+               break;
+               
+               // product 4
+               case 10: 
+               problem += "triple \\("+a+"\\)";
+               answer = "\\(3 \\cdot "+a+"\\)";
+               break;
+               
+               // quotient 1
+               case 11: 
+               problem += "the quotient of \\("+a+"\\) and \\("+b+"\\)";
+               answer = "\\("+a+" \\div "+b+"= \\cfrac{"+a+"}{"+b+"}\\)";
+               break;
+               
+               // quotient 2
+               case 12: 
+               problem += "\\("+a+"\\) divided by \\("+b+"\\)";
+               answer = "\\("+a+" \\div "+b+"= \\cfrac{"+a+"}{"+b+"}\\)";
+               break;
+               
+               // quotient 3
+               case 13: 
+               problem += "the ratio of \\("+a+"\\) to \\("+b+"\\)";
+               answer = "\\(\\cfrac{"+a+"}{"+b+"}\\)";
+               break;
+               
+               // mixed 1
+               case 14: 
+               problem += "\\("+a+"\\) less than \\("+b+"\\) times \\("+c+"\\)";
+               answer = "\\("+b+" \\cdot "+c+" - "+a+"\\)";
+               break;
+               
+               // mixed 2
+               case 15: 
+               problem += "\\("+a+"\\) increased by \\("+b+"\\) times \\("+c+"\\)";
+               answer = "\\("+a+" + "+b+" \\cdot "+c+"\\)";
+               break;
+               
+               // mixed 3
+               case 16: 
+               problem += "\\("+a+"\\) times the sum of \\("+b+"\\) and \\("+c+"\\)";
+               answer = "\\("+a+" \\cdot ("+b+" + "+c+")\\)";
+               break;
+               
+               // mixed 4
+               case 17:
+               problem += "the difference of \\("+a+"\\) and the sum of \\("+b+"\\) and \\("+c+"\\)";
+               answer = "\\("+a+" - ("+b+" + "+c+")\\)";
+               break;
+               
+               // mixed 4
+               case 18:
+               d = random(2,10);
+               problem += "the difference of \\("+a+"\\) and \\("+d+"\\) times the sum of \\("+b+"\\) and \\("+c+"\\)";
+               answer = "\\("+a+" - "+d+"("+b+" + "+c+")\\)";
+               break;
+               
+               // squared
+               case 19:
+               problem += "\\("+a+"\\) squared";
+               answer = "\\("+a+"^{2}\\)";
+               break;
+           
+           }
+
+           break;
+           
+           // Evaluating Expressions
+           case 2:
+           var exp = "", situation = "", ans;
+           
+           a = non_zero_random(-10,10);
+           b = non_zero_random(-10,10);
+           c = random(2,5);
+           
+           var variables = produceVars(3);
+           var var1 = variables[0];
+           var var2 = variables[1];
+           var var3 = variables[2];
+           
+           switch(random(0,7)){
+           
+              case 0:
+              exp = mix([var1+"^2",var2+""+var3]);
+              ans = formatDec(c**2+a*b);
+              situation = "\\("+var1+" = "+c+", "+var2+" = "+a+", \\) and \\("+var3+" = "+b+"\\)";
+              answer = "\\("+ans+"\\)";
+              break;
+              
+              case 1:
+              exp = var3+"("+mix([var1,var2])+")";
+              ans = formatDec((c+a)*b);
+              situation = "\\("+var1+" = "+c+", "+var2+" = "+a+", \\) and \\("+var3+" = "+b+"\\)";
+              answer = "\\("+ans+"\\)";
+              break;
+              
+              case 2:
+              d = random(2,9);
+              exp = mix([d+"("+var1+" + "+var2+")",var3]);
+              ans = formatDec(d*(c+a)+b);
+              situation = "\\("+var1+" = "+c+", "+var2+" = "+a+", \\) and \\("+var3+" = "+b+"\\)";
+              answer = "\\("+ans+"\\)";
+              break;
+              
+              case 3:
+              d = random(2,9);
+              exp = mix([var1+""+var2,d+var3]);
+              ans = formatDec(c*a+d*b);
+              situation = "\\("+var1+" = "+c+", "+var2+" = "+a+", \\) and \\("+var3+" = "+b+"\\)";
+              answer = "\\("+ans+"\\)";
+              break;
+              
+              case 4:
+              d = random(2,5);
+              e = formatDec(d*c*b);
+              exp = "\\cfrac{"+e+var2+"}{"+var1+var3+"}";
+              situation = "\\("+var1+" = "+c+", "+var2+" = "+a+", \\) and \\("+var3+" = "+b+"\\)";
+              answer = "\\("+(d*a)+"\\)";
+              break;
+              
+              case 5:
+              d = non_zero_random(-10,10);
+              a = formatDec(c**2-d*c*b);
+              exp = "\\cfrac{"+var1+"^2-"+var2+"}{"+var1+var3+"}";
+              situation = "\\("+var1+" = "+c+", "+var2+" = "+a+", \\) and \\("+var3+" = "+b+"\\)";
+              answer = "\\("+d+"\\)";
+              break;
+              
+              case 6:
+              d = random(-10,-1);
+              exp = var1+"^2";
+              situation = "\\("+var1+" = "+d+"\\)";
+              a = formatDec(d*d);
+              answer = "\\("+a+"\\)";
+              break  
+              
+              case 7:
+              d = random(-10,-1);
+              exp = b+var1+"^2";
+              situation = "\\("+var1+" = "+d+"\\)";
+              a = formatDec(b*d*d);
+              answer = "\\("+a+"\\)";
+              break 
+           
+           }
+           problem = "Evaluate \\("+exp+"\\) when "+situation;
+           break;
+           
+           // Combining Like Terms
+           case 3:
+           
+           // constants/coefficients
+           a = non_zero_random(-10,10); b = non_zero_random(-10,10); c = non_zero_random(-10,10); 
+           d = non_zero_random(-10,10); e = non_zero_random(-10,10); f = non_zero_random(-10,10); 
+           
+           // variables
+           var variables = produceVars(3);
+           var var1 = variables[0];
+           var var2 = variables[1];
+           var var3 = variables[2];
+           
+           switch(random(0,6)){
+           
+             // 4 terms - 2 of one var, 2 constants
+             case 0:
+             problem = mix([a+var1,b+var1,c,d]);
+             answer = (a+b)+var1+" + "+(c+d);
+             break;
+             
+             // 5 terms - 3 of one var, 2 constants
+             case 1:
+             problem = mix([a+var1,b+var1,c,d,e+var1]);
+             answer = (a+b+e)+var1+" + "+(c+d);
+             break;
+             
+             // 5 terms - 2 of one var, 3 constants
+             case 2:
+             problem = mix([a+var1,b+var1,c,d,e]);
+             answer = (a+b)+var1+" + "+(c+d+e);
+             break;
+             
+             // 5 terms - 2 of one var, 2 of another var, 1 constant
+             case 3:
+             problem = mix([a+var1,b+var1,c+var2,d+var2,e]);
+             answer = (a+b)+var1+" + "+(c+d)+var2+" + "+(e);
+             break;
+             
+             // 6 terms - 2 of one var, 2 of another var, 2 constants
+             case 4:
+             problem = mix([a+var1,b+var1,c+var2,d+var2,e,f]);
+             answer = (a+b)+var1+" + "+(c+d)+var2+" + "+(e+f);
+             break;
+             
+             // 6 terms - 3 of one var, 1 of another var, 2 constants
+             case 5:
+             problem = mix([a+var1,b+var1,c+var1,d+var2,e,f]);
+             answer = (a+b+c)+var1+" + "+(d)+var2+" + "+(e+f);
+             break;
+             
+             // 6 terms - 2 of one var, 1 of another var, 3 constants
+             case 6:
+             problem = mix([a+var1,b+var1,c,d+var2,e,f]);
+             answer = (a+b)+var1+" + "+(d)+var2+" + "+(c+e+f);
+             break;
+             
+           }
+           problem = "Simplify: \\("+doublesigns(problem)+"\\)";
+           answer = "\\("+simplifyExpression(answer)+"\\)";
+           break;
+           
+           // Distributing
+           case 4:
+           do{a = non_zero_random(-10,10);} while(a == 1);
+           b = non_zero_random(-10,10);
+           c = non_zero_random(-10,10);
+           
+           // variables
+           var variables = produceVars(2);
+           var var1 = variables[0];
+           var var2 = variables[1];
+           
+           //switch(random(0,9)){
+             // the other cases are a little tough for 7th grade, not used currently
+           switch(random(0,6)){
+           
+              // distributing in a number
+              case 0: case 1: case 2: case 3: case 4: case 5:
+              problem = a+"("+mix([b+var1,c])+")";
+              answer = (a*b)+var1+" + "+(a*c);         
+              break;
+              
+              // distributing in x
+              case 9:
+              problem = var1+"("+mix([b+var1,c])+")";
+              answer = b+var1+"^2 + "+c+var1; 
+              break;
+              
+              // distributing in a number with x
+              case 7:
+              problem = a+var1+"("+mix([b+var1,c])+")";
+              answer = (a*b)+var1+"^2 + "+(a*c)+var1; 
+              break;
+              
+              // distributing in a number over a trinomial
+              case 8:
+              problem = a+"("+mix([b+var1,c,var2])+")";
+              answer = (a*b)+var1+" + "+(a*c)+" + "+a+var2;         
+              break;
+              
+              // distributing in a negative
+              case 6:
+              problem = "-("+mix([b+var1,c])+")";
+              answer = (-1*b)+var1+" + "+(-1*c);         
+              break;
+           
+           }
+           problem = "Distribute: \\("+doublesigns(problem)+"\\)";
+           answer = "\\("+answer+"\\)";
+           break;
+           
+           // Distributing and Combining Like Terms
+           case 5:
+           a = non_zero_random(-10,10);
+           b = non_zero_random(-10,10);
+           c = non_zero_random(-10,10);
+           d = non_zero_random(-10,10); 
+           f = non_zero_random(-10,10); 
+           h = non_zero_random(-10,10);
+           
+           // variable
+           var var1 = produceVars(1)[0];
+           
+           switch(random(0,3)){
+           
+              // adding a constant outside
+              case 0:
+              problem = mix([a+"("+mix([b+var1,c])+")",d]);
+              answer = (a*b)+var1;
+              e = (a*c)+d;
+              if(e != 0){answer+=" + "+e;}         
+              break;
+              
+              // adding a variable outside
+              case 1:
+              problem = mix([a+"("+mix([b+var1,c])+")",d+var1]);        
+              answer = (a*c);
+              e = (a*b)+d;
+              if(e != 0){answer=e+var1+"+"+answer;}         
+              break;
+              
+              // adding a variable and a constant outside
+              case 2:
+              problem = mix([a+"("+mix([b+var1,c])+")",d+var1,f]);
+              e = (a*b)+d;
+              g = (a*c)+f;
+              
+              if(e != 0){
+                answer=e+var1;
+                if(g != 0){   answer += " + "+g; }
+                
+              } else{
+                if(g != 0){  answer = g; }else{  answer = "0"; }
+              }
+              
+              break;
+              // two groups of parenthesis
+              case 3:
+              problem = a+"("+mix([b+var1,c])+") + "+h+"("+mix([d+var1,f])+")"; 
+              e = (a*b)+(d*h);
+              g = (a*c)+(f*h);
+              
+              if(e != 0){
+              
+                answer=e+var1;
+                
+                if(g != 0){ answer += " + "+g; }
+                
+              } else{ if(g != 0){ answer = g; }else{ answer = "0"; }
+              }
+              break;
+           } 
+           problem = "Distribute and Simplify Completely:<br> \\("+doublesigns(problem)+"\\)";
+           answer = "\\("+simplifyExpression(answer)+"\\)";
+           break;
+           
+           // Factoring
+           case 6:
+           // variable
+           var var1 = produceVars(1)[0];
+           
+           c = 1;
+           do{
+              a = random(2,20); 
+              b = random(2,20);
+              c = gcd(a,b);
+              d = a/c; 
+           } while (c == 1);
+           
+           if(d == 1){ d= ""; }
+           
+           var sign = "";  // plus sign included in the mix() function so it was taken out here
+           // do 50-50 add/subtract
+           if(random(0,1) == 0){
+              sign = "-";
+           }
+           
+           // take this out if you uncomment the options below
+            problem = mix([a+var1,sign+" "+b]);
+            answer = c+"("+d+var1+"+"+sign+" "+(b/c)+")";
+              
+
+           /*
+           switch(random(0,4)){
+           
+              // linear
+              case 0: case 1: case 2: case 3:
+              problem = mix([a+var1,sign+" "+b]);
+              answer = c+"("+d+var1+"+"+sign+" "+(b/c)+")";
+              break;
+              
+              // quad
+              case 4:
+              problem = mix([a+var1+"^2",sign+" "+b+var1]); 
+              answer = c+var1+"("+d+var1+"+"+sign+" "+(b/c)+")";
+              break;
+           
+           }
+          */
+           problem = "Factor: \\("+doublesigns(problem)+"\\)";
+           answer = "\\("+answer+"\\)";
+           break;
+       }
+            
+       $("#generated").html(problem);
+       $("#answer").html(doublesigns(answer));
+       renderMathInElement(document.body);
+	}
+    
+    // helper function to produce numOfVars num of distinct variables
+    function produceVars(numOfVars){
+        
+        var letterOptions = ["x","y","z","a","b","c","d","f","g","h","j","k","m","n","p","q","r","v","w"];
+        var output = [];
+        var choice;
+        
+        for(var i = 0; i < numOfVars; i++){
+            
+            // keep generating options from the list until a new one is picked
+            do{
+                
+                choice = letterOptions[random(0,letterOptions.length-1)].toString();
+            
+            }
+            while(output.indexOf(choice) !== -1);
+            output.push(choice);
+        
+        }
+        
+        return output;
+    
+    }
+    
+    // function to rearrange the pieces of a polynomial
+    function mix(termArray){
+       
+       var output = "";
+       
+       if(termArray.length == 0){
+            
+            output = "0";
+            
+       }
+       else{
+       
+          var terms = shuffle(termArray);
+          
+          output = terms[0];
+          
+          for(var i = 1; i < terms.length; i++){
+              
+              output += " + "+terms[i];
+          
+          }
+          
+       }
+       
+       return output;
+    }
+    
+    function shuffle(array) {
+       array.sort(() => Math.random() - 0.5);
+       return array;
+    }
+</script>
