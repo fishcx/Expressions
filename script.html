@@ -20,7 +20,7 @@
     $('#generate').click(function(){
         var type;
         // handles the formatting for selecting any type
-        if($("#type").val()=="any"){type = random(1,6);}
+        if($("#type").val()=="any"){type = random(1,7);}
         else{type = parseInt($("#type").val())}
 
         if(!testing){$("#answer").hide(); $("#show-answer").val("Show Answer");}
@@ -48,7 +48,8 @@
                          "https://www.youtube.com/watch?v=LT30L4PoO9I",
                          "https://www.youtube.com/watch?v=swBAPhmXKBI",
                          "https://www.youtube.com/watch?v=8Uvg-7837xY",
-                         "https://www.youtube.com/watch?v=EY9Ntye0K6U"];
+                         "https://www.youtube.com/watch?v=EY9Ntye0K6U",
+                         "https://www.youtube.com/watch?v=7JNQhdTJxR4"];
        
        if(typeof videoLinks[type-1] !== "undefined"){ 
          $("#videoLink"). attr("href", videoLinks[type-1]);
@@ -501,6 +502,73 @@
           */
            problem = "Factor: \\("+doublesigns(problem)+"\\)";
            answer = "\\("+answer+"\\)";
+           break;
+
+           // Percent Expressions
+           case 7:
+           var letter = produceVars(1)[0];
+           problem = "The original price of an item is represented as \\("+letter+"\\)<br>";
+           var word = "";
+           var per = 0;
+           var total = 100;
+           var symb = "";
+
+              //tax, discount, markup, markdown, commission, tip
+              switch(random(0,3)){
+                 
+                 // tax or tip
+                 case 0:
+                 per = random(3,25); // percent
+                 total = total + per;
+                 symb = "+";
+                    //tax or tip
+                    switch(random(0,1)){ case 0: word = "tax"; break; case 1: word = "tip"; break; }
+                 break;
+                 
+                 // discount
+                 case 1:
+                 per = random(5,75); // percent
+                 word = "discount";
+                 total = total - per;
+                 symb = "-";
+                 break;
+                 
+                 // commission
+                 case 2:
+                 per = random(3,30); // percent
+                 word = "commission";
+                 break;
+                 
+                 // markup or mark down
+                 case 3:
+                 per = random(25,90); // percent
+                 
+                    //markup or mark down
+                    switch(random(0,1)){ case 0: word = "markup"; symb = "+"; total = total+per; break; case 1: word = "markdown"; symb = "-"; total = total-per; break; }
+
+                 break;
+                 
+              }
+           var perDec = formatDec(per/100); // convert to decimal
+           total = formatDec(total/100); //convert to decimal
+           var quesType = random(0,1);
+           if(word == "commission"){ quesType = 0; } // no total price for commission
+           
+           switch(quesType){
+               
+               // ask for the part
+               case 0:
+               problem += "What represents a \\("+per+"\\%\\) "+word+"?";
+               answer = "\\("+perDec+letter+"\\)";
+               break;
+               
+               // ask for the total price
+               case 1:
+               problem += "What is the final price after a "+word+" of \\("+per+"\\%\\)?";
+               answer = "\\("+letter+symb+perDec+letter+"="+total+letter+"\\)";
+               break;
+           }
+           
            break;
        }
             
