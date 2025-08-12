@@ -20,7 +20,7 @@
     $('#generate').click(function(){
         var type;
         // handles the formatting for selecting any type
-        if($("#type").val()=="any"){type = random(1,7);}
+        if($("#type").val()=="any"){type = random(1,8);}
         else{type = parseInt($("#type").val())}
 
         if(!testing){$("#answer").hide(); $("#show-answer").val("Show Answer");}
@@ -49,6 +49,7 @@
                          "https://www.youtube.com/watch?v=swBAPhmXKBI",
                          "https://www.youtube.com/watch?v=8Uvg-7837xY",
                          "https://www.youtube.com/watch?v=EY9Ntye0K6U",
+                         "https://www.youtube.com/watch?v=7JNQhdTJxR4",
                          "https://www.youtube.com/watch?v=7JNQhdTJxR4"];
        
        if(typeof videoLinks[type-1] !== "undefined"){ 
@@ -199,6 +200,13 @@
 
            break;
            
+          // Writing Linear Expressions
+          case 8:
+          var linExp = generateLinearExpression();
+          problem = linExp.problem;
+          answer = `\\(${linExp.expression}\\)`;
+          break;
+
            // Evaluating Expressions
            case 2:
            var exp = "", situation = "", ans;
@@ -628,6 +636,208 @@
        return output;
     }
     
+     // Helper function for generatePropWord
+function generateName() {
+    var options = [
+        { name: "John", pronoun: "he" },
+        { name: "Jane", pronoun: "she" },
+        { name: "Bill", pronoun: "he" },
+        { name: "Alex", pronoun: "she" },
+        { name: "Jennifer", pronoun: "she" },
+        { name: "Skyler", pronoun: "she" },
+        { name: "Michael", pronoun: "he" },
+        { name: "Sarah", pronoun: "she" },
+        { name: "Kim", pronoun: "she" },
+        { name: "Jacob", pronoun: "he" },
+        { name: "Jessica", pronoun: "she" },
+        { name: "Antonio", pronoun: "he" },
+        { name: "Anthony", pronoun: "he" },
+        { name: "Rebecca", pronoun: "she" },
+        { name: "Jen", pronoun: "she" },
+        { name: "Jeff", pronoun: "he" },
+        { name: "Liam", pronoun: "he" },
+        { name: "Emma", pronoun: "she" },
+        { name: "Noah", pronoun: "he" },
+        { name: "Olivia", pronoun: "she" },
+        { name: "Ethan", pronoun: "he" },
+        { name: "Ava", pronoun: "she" },
+        { name: "Logan", pronoun: "he" },
+        { name: "Isabella", pronoun: "she" },
+        { name: "Lucas", pronoun: "he" },
+        { name: "Mia", pronoun: "she" },
+        { name: "Mason", pronoun: "he" },
+        { name: "Harper", pronoun: "she" },
+        { name: "Elijah", pronoun: "he" },
+        { name: "Chloe", pronoun: "she" },
+        { name: "Aiden", pronoun: "he" },
+        { name: "Lily", pronoun: "she" }
+    ];
+
+    var chosen = options[random(0, options.length - 1)];
+    return chosen;
+}
+
+    function generateLinearExpression(){
+
+      const scenarioNum = random(1, 15);
+      const { name, pronoun } = generateName();
+
+    let problem = "Write an Expression: ";
+    let expression = "";
+    let variable = ""; // context-appropriate
+
+    switch (scenarioNum) {
+        case 1: 
+            variable = "t"; // tickets
+            var costPerTicket = random(8, 15);
+            var serviceFee = random(2, 6);
+
+            problem += `${name} bought \\(${variable}\\) tickets to a concert for $${costPerTicket} each and paid a $${serviceFee} service fee.`;
+            expression = `${costPerTicket}${variable} + ${serviceFee}`;
+        break;
+        
+
+        case 2: 
+            variable = "m"; // months
+            var monthlyRate = random(10, 25);
+            var signupFee = random(20, 50);
+
+            problem += `${name} signed up for a gym that charges $${monthlyRate} per month, \\(${variable}\\), plus a $${signupFee} signup fee.`;
+            expression = `${monthlyRate}${variable} + ${signupFee}`;
+        break;
+        
+        case 3: 
+            variable = "b"; // books
+            var pagesPerBook = random(100, 200);
+            var extraPages = random(20, 50);
+
+            problem += `${name} read \\(${variable}\\) number of books, each with ${pagesPerBook} pages, and also read ${extraPages} pages of articles.`;
+            expression = `${pagesPerBook}${variable} + ${extraPages}`;
+        break;
+
+        case 4: 
+            variable = "h"; // hours
+            var hourlyRate = random(12, 20);
+            var bonus = random(10, 25);
+
+            problem += `${name} worked a certain number of hours, \\(${variable}\\), and earned $${hourlyRate} per hour, plus a $${bonus} bonus.`;
+            expression = `${hourlyRate}${variable} + ${bonus}`;
+        break;
+
+        case 5: 
+            variable = "n"; // items
+            var itemCost = random(4, 12);
+            var discount = random(5, 15);
+
+            problem += `${name} bought \\(${variable}\\) items at $${itemCost} each and used a $${discount} discount.`;
+            expression = `${itemCost}${variable} - ${discount}`;
+        break;
+
+        case 6: 
+            variable = "s"; // shirts
+            var pricePerShirt = random(10, 25);
+            var tax = random(3, 8);
+
+            problem += `${name} bought \\(${variable}\\) shirts for $${pricePerShirt} each and paid $${tax} in tax.`;
+            expression = `${pricePerShirt}${variable} + ${tax}`;
+        break;
+
+        case 7: 
+            variable = "d"; // distance (miles)
+            var d = random(3, 10);
+            var costPerMile = random(2, 4);
+            var baseFare = random(5, 10);
+
+            problem += `${name} took a taxi that charges $${costPerMile} per mile, \\(${variable}\\),  plus a base fare of $${baseFare}.`;
+            expression = `${costPerMile}${variable} + ${baseFare}`;
+        break;
+
+        case 8: 
+            variable = "p"; // pens
+            var penPrice = random(1, 3);
+            var notebookPrice = random(5, 10);
+
+            problem += `${name} bought \\(${variable}\\) pens at $${penPrice} each and one notebook for $${notebookPrice}.`;
+            expression = `${penPrice}${variable} + ${notebookPrice}`;
+        break;
+
+        case 9: 
+            variable = "h"; // number of hours worked
+            var hourlyRate = random(9,15);
+            var spent = random(20,40); 
+
+            problem += `${name} earns $${hourlyRate} per hour, \\(${variable}\\), working at a grocery store. One day, ${pronoun} spent $${spent} of what ${pronoun} had earned on lunch.`
+            expression = `${hourlyRate}${variable} - ${spent}`;
+        break;
+
+        case 10: 
+            variable = "b"; // bracelets
+            var bCost = random(5,15); // cost per bracelet
+            var spent = random(5,20); 
+
+            problem += `${name} is selling handmade bracelets, \\(${variable}\\), for $${bCost} each. After ${pronoun} spends $${spent} to cover the cost of materials.`
+            expression = `${bCost}${variable} - ${spent}`;
+        break;
+      
+        case 11: 
+            variable = "m";
+            var numMonths = random(5,10); 
+            var fee = random(8,22);
+
+            problem += `${name} pays a fee of $${fee} and \\(${variable}\\) per month for ${numMonths} months`;
+            expression = `${fee} + ${numMonths}${variable}`;
+
+        break;
+
+        case 12: 
+            variable = "d";
+            var costPerDay = randomDec(2,5,2); 
+            var initial = random(50,100);
+
+            problem += `${name} has a prepaid card for $${initial}. It loses $${costPerDay} per day, \\(${variable}\\), it is used.`;
+            expression = `${initial} - ${costPerDay}${variable}`;
+
+        break;
+
+        case 13: 
+            variable = "m";
+            var amountPerMin = random(1,5)*10; 
+            var initial = random(100,200)*10;
+
+            problem += `A tank holds ${initial} liters of water and drains ${amountPerMin} per minute, \\(${variable}\\)`;
+            expression = `${initial} - ${amountPerMin}${variable}`;
+
+        break;
+
+        case 14: 
+            variable = "h";
+            var rate = random(20,40); 
+            var supplies = random(5,15);
+
+            problem += `${name} earns $${rate} per hour, \\(${variable}\\), tutoring, but spends $${supplies} on supplies.`;
+            expression = `${rate}${variable} - ${supplies}`;
+
+        break;
+
+        case 15: 
+            variable = "t";
+            var rate = random(40,80); 
+            var cost = random(5,30)*10;
+
+            problem += `Each ticket, \\(${variable}\\), costs $${rate} but $${cost} is spent on event setup.`;
+            expression = `${rate}${variable} - ${cost}`;
+
+        break;
+
+        default:
+            problem = "No scenario selected.";
+            expression = "";
+    }
+
+    return { problem, expression };
+
+    }
+
     function shuffle(array) {
        array.sort(() => Math.random() - 0.5);
        return array;
