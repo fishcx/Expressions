@@ -294,6 +294,7 @@
            // constants/coefficients
            a = non_zero_random(-10,10); b = non_zero_random(-10,10); c = non_zero_random(-10,10); 
            d = non_zero_random(-10,10); e = non_zero_random(-10,10); f = non_zero_random(-10,10); 
+           g = non_zero_random(-10,10); h = non_zero_random(-10,10);
            
            // variables
            var variables = produceVars(3);
@@ -301,7 +302,7 @@
            var var2 = variables[1];
            var var3 = variables[2];
            
-           switch(random(0,6)){
+           switch(random(0,8)){
            
              // 4 terms - 2 of one var, 2 constants
              case 0:
@@ -343,6 +344,18 @@
              case 6:
              problem = mix([a+var1,b+var1,c,d+var2,e,f]);
              answer = (a+b)+var1+" + "+(d)+var2+" + "+(c+e+f);
+             break;
+
+             // 7 terms - 2 of one var, 2 of another var, one mixed var, 2 constants
+             case 7:
+             problem = mix([a+var1,b+var1,c+var2,d+var2,e,f,g+var1+var2]);
+             answer = (a+b)+var1+" + "+(c+d)+var2+" + "+(e+f)+" + "+g+var1+var2;
+             break;
+
+             // 8 terms - 2 of one var, 2 of another var, 2 of the same mixed var, 2 constants
+             case 8:
+             problem = mix([a+var1,b+var1,c+var2,d+var2,e,f,g+var1+var2,h+var1+var2]);
+             answer = (a+b)+var1+" + "+(c+d)+var2+" + "+(e+f)+" + "+(g+h)+var1+var2;
              break;
              
            }
