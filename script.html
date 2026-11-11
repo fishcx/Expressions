@@ -480,9 +480,11 @@
            
            // Factoring
            case 6:
-           // variable
-           var var1 = produceVars(1)[0];
-           
+           // variables
+           var variables = produceVars(2);
+           var var1 = variables[0];
+           var var2 = variables[1];
+
            c = 1;
            do{
               a = random(2,20); 
@@ -499,12 +501,6 @@
               sign = "-";
            }
            
-           // take this out if you uncomment the options below
-            problem = mix([a+var1,sign+" "+b]);
-            answer = c+"("+d+var1+"+"+sign+" "+(b/c)+")";
-              
-
-           /*
            switch(random(0,4)){
            
               // linear
@@ -512,15 +508,23 @@
               problem = mix([a+var1,sign+" "+b]);
               answer = c+"("+d+var1+"+"+sign+" "+(b/c)+")";
               break;
-              
+
               // quad
               case 4:
+              problem = mix([a+var1+var2,sign+" "+b+var2]);
+              answer = c+var2+"("+d+var1+"+"+sign+" "+(b/c)+")";
+              break;
+
+              /*
+              // quad
+              case 5:
               problem = mix([a+var1+"^2",sign+" "+b+var1]); 
               answer = c+var1+"("+d+var1+"+"+sign+" "+(b/c)+")";
               break;
+              */
            
            }
-          */
+          
            problem = "Factor: \\("+doublesigns(problem)+"\\)";
            answer = "\\("+answer+"\\)";
            break;
